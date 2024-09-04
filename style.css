@@ -1,0 +1,116 @@
+/* Reset mặc định */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    color: #333;
+    text-align: center;
+    line-height: 1.6;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("img/thuc_vat_1.jpeg");
+    background-size: 100vw;
+    background-size: cover;
+    background-position: bottom;
+
+    height: 400px;
+    color: white;
+    padding: 20px 0;
+    justify-content: center;
+}
+header h1, header p {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+header h1 {
+    font-size: 2.5em;
+}
+
+header p {
+    font-size: 1.2em;
+}
+
+nav {
+    background-color: #f0f8ff;
+    margin: 20px 0;
+    position: sticky;
+    top: 0;
+    
+}
+
+nav button {
+    text-wrap: nowrap;
+    padding: 10px 20px;
+    margin: 5px 10px;
+    font-size: 1.1em;
+    color: #27ae60;
+    background-color: #f0f8ff;
+    border: solid;
+    border-width: 2px;
+    border-color: #27ae60;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: all 0.5s;
+    transition-timing-function:cubic-bezier(0.5, 3, 0, 1);
+    box-shadow:0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+nav button:hover {
+    transform:scale(1.1,1.1);
+    color: white;
+    background-color: #2cc06a;
+    border-color: #2cc06a;
+    box-shadow:0 0 15px rgba(0, 0, 0, 0.2);
+}
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    background-color: .fff;
+    border-radius: 8px;
+    box-shadow:0 0 15px rgba(0, 0, 0, 0.1);
+    margin: 10px auto;
+    max-width: 800px;
+    transition: all 0.4s;
+    transition-timing-function:cubic-bezier(0.5, 3, 0, 1);
+}
+.content:hover {
+    transform: translateX(0.5rem);
+}
+
+.content > img {
+    margin: 20px;
+    width: 20%;
+    height: auto;
+    object-fit: cover;
+}
+.content > div {
+    text-align: left;
+    width: 80%;
+    margin: 10px;
+}
+
+
+footer {
+    margin-top: 30px;
+    background-color: #2ecc71;
+    color: white;
+    padding: 10px 0;
+}
+
+footer p {
+    font-size: 0.9em;
+}
