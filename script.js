@@ -163,9 +163,12 @@ for (const content_div of contents_div) {
 const header_h1 = document.querySelector("header>h1");
 const p = document.querySelector("p");
 const nav_button = document.querySelectorAll("nav button");
+const content_div = document.querySelectorAll(".content div");
+const content_img = document.querySelectorAll(".content img");
 
 
-function adjustFontSize() {
+
+function adjust_nav_header() {
   const screenWidth = window.innerWidth;
   if (screenWidth < 768) {
     header_h1.style.fontSize = "2.2em";
@@ -174,6 +177,9 @@ function adjustFontSize() {
         button.style.padding = "8px 10px"
         button.style.margin = "5px 3px"
     });
+    // content_div.forEach((div) => {
+    //     div.style.fontSize = "0.9em";
+    // });
   } else if (screenWidth >= 768 && screenWidth < 1024) {
     header_h1.style.fontSize = "2.5em";
     p.style.fontSize = "1.2em";
@@ -181,6 +187,9 @@ function adjustFontSize() {
         button.style.padding = "10px 15px"
         button.style.margin = "5px 5px"
     });
+    // content_div.forEach((div) => {
+    //     div.style.fontSize = "1em";
+    // });
   } else {
     header_h1.style.fontSize = "3em";
     p.style.fontSize = "1.5em";
@@ -188,11 +197,48 @@ function adjustFontSize() {
         button.style.padding = "10px 20px"
         button.style.margin = "5px 10px"
     });
+    // content_div.forEach((div) => {
+    //     div.style.fontSize = "1.2em";
+    // });
   }
 }
 
-adjustFontSize();
-window.addEventListener("resize", adjustFontSize);
+function adjustcontent() {
+    const screenWidth = window.innerWidth;
+    
+  if (screenWidth < 535) {
+    content_div.forEach((div) => {
+        div.style.fontSize = "0.75em";
+    });
+    content_img.forEach((img) => {
+        img.style.width = "130px"
+        img.style.height = "84.5pxpx"
+    });
+  } else if (screenWidth >= 535 && screenWidth < 665) {
+    content_div.forEach((div) => {
+        div.style.fontSize = "0.85em";
+    });
+    content_img.forEach((img) => {
+        img.style.width = "160px"
+        img.style.height = "104px"
+    });
+  } else {
+    content_div.forEach((div) => {
+        div.style.fontSize = "1.1em";
+    });
+    content_img.forEach((img) => {
+        img.style.width = "200px"
+        img.style.height = "130pxpx"
+    });
+  }
+}
+
+adjust_nav_header();
+adjustcontent();
+window.addEventListener("resize", () => {
+    adjust_nav_header()
+    adjustcontent()
+});
 
 
 
