@@ -159,11 +159,40 @@ for (const content_div of contents_div) {
 
 
 
+// responsive
+const header_h1 = document.querySelector("header>h1");
+const p = document.querySelector("p");
+const nav_button = document.querySelectorAll("nav button");
 
 
+function adjustFontSize() {
+  const screenWidth = window.innerWidth;
+  if (screenWidth < 768) {
+    header_h1.style.fontSize = "2.2em";
+    p.style.fontSize = "1em";
+    nav_button.forEach((button) => {
+        button.style.padding = "8px 10px"
+        button.style.margin = "5px 3px"
+    });
+  } else if (screenWidth >= 768 && screenWidth < 1024) {
+    header_h1.style.fontSize = "2.5em";
+    p.style.fontSize = "1.2em";
+    nav_button.forEach((button) => {
+        button.style.padding = "10px 15px"
+        button.style.margin = "5px 5px"
+    });
+  } else {
+    header_h1.style.fontSize = "3em";
+    p.style.fontSize = "1.5em";
+    nav_button.forEach((button) => {
+        button.style.padding = "10px 20px"
+        button.style.margin = "5px 10px"
+    });
+  }
+}
 
-
-
+adjustFontSize();
+window.addEventListener("resize", adjustFontSize);
 
 
 
