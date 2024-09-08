@@ -206,7 +206,7 @@ function adjust_nav_header() {
 function adjustcontent() {
     const screenWidth = window.innerWidth;
     
-  if (screenWidth < 535) {
+  if (screenWidth < 540) {
     content_div.forEach((div) => {
         div.style.fontSize = "0.75em";
     });
@@ -214,7 +214,7 @@ function adjustcontent() {
         img.style.width = "130px"
         img.style.height = "84.5pxpx"
     });
-  } else if (screenWidth >= 535 && screenWidth < 665) {
+  } else if (screenWidth >= 540 && screenWidth < 685) {
     content_div.forEach((div) => {
         div.style.fontSize = "0.85em";
     });
