@@ -13,33 +13,59 @@
         <h1>Nature Education</h1>
         <p>Nâng cao nhận thức về bảo vệ môi trường qua giáo dục</p>
     </header>
-
-    <nav>
-        <button id='woody_trees'>Cây thân gỗ</button>
-        <button id="herbaceous_plants">cây thân thảo</button>
-        <button id="fungi">Các loại nấm</button>
+    <nav id="nav">
+        <button id='home_btn'>Home</button>
+        <div class="nav_btn">
+            <button id='woody_trees'>Cây thân gỗ</button>
+            <button id="herbaceous_plants">Cây thân thảo</button>
+            <button id="fungi">Các loại nấm</button>
+        </div>
     </nav>
 
     <main id="content_box">
-        <div class="content" id="Lim Xanh (Erythrophleum fordii)">
-            <img src="https://govi.vn/wp-content/uploads/2022/03/go-lim-xanh-la-gi-va-dac-diem-nhan-biet.jpg" alt="">
-            <div>
-                <h2>Lim Xanh (Erythrophleum fordii)</h2>
-                <p>Lim Xanh là loài cây gỗ lớn, cao khoảng 20-30m, đường kính thân có thể lên đến 1m hoặc hơn. Gỗ Lim
-                    Xanh rất cứng, nặng, bền, không mối mọt và có màu đỏ sẫm.</p>
-            </div>
-        </div>
-        <div>
-            <h2>Chào mừng bạn đến với Nature Education</h2>
-            <p>Chọn một mục ở trên để bắt đầu khám phá.</p>
-        </div>
+        <div id="trees_page_div">
 
+        </div>
+        <div id="home">
+            <div class="welcome" style="margin: 30px 10px;">
+                <h2>Welcome to Nature Education!</h2>
+                <p>Chào mừng bạn đến với trang giáo dục về bảo vệ môi trường. Hãy chọn mục ở dưới để bắt đầu khám phá.</p>
+            </div>
+            <div class="pages_box">
+                <div class="pages" id="trees_page">
+                    <div class="white_effect">
+                        <h3>Thông tin cây</h3>
+                    </div>
+                </div>
+                <div class="pages">
+                    <div class="white_effect">
+                        <h3>Các biện pháp bảo vệ môi trường</h3>
+                    </div>
+                </div>
+                <div class="pages">
+                    <div class="white_effect">
+                        <h3>diễn đàn</h3>
+                    </div>
+                </div>
+                <div class="pages">
+                    <div class="white_effect">
+                        <h3>chiến dịch cộng đồng</h3>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        
     </main>
+    
+
+
+
+
 
     <footer>
         <p>&copy; 2024 Nature Education. All rights reserved.</p>
     </footer>
-    <form action="">
+    <form style="display: none;">
         <label for="input1">title:</label>
         <input type="text" id="input1"><hr>
 

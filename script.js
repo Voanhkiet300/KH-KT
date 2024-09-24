@@ -9,6 +9,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/fireba
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-analytics.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword  } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -33,17 +34,32 @@ const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
 
-
-
-const contents_div = document.getElementsByClassName("content")
-const contentDiv = document.getElementById('content_box');
+const auth = getAuth();
 
 
 
 
 
 
-let page_status = 'normal';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const home = document.querySelector("#home")
+const home_btn = document.querySelector("#home_btn")
+const content_div = document.querySelector("#trees_page_div")
+const content = document.querySelectorAll(".content")
+const trees_page = document.querySelector("#trees_page")
 const woody_trees_btn = document.getElementById('woody_trees')
 const herbaceous_plants_btn = document.getElementById('herbaceous_plants')
 const fungi_btn = document.getElementById('fungi')
@@ -55,9 +71,7 @@ let count = 0
 count = 0
 const woody_trees_querySnapshot = await getDocs(collection(db, "woody_trees"));
 woody_trees_querySnapshot.forEach((doc) => {
-    woody_trees = doc.data()
-    woody_trees_list[count] = doc.data()
-    woody_trees_list[count].id = doc.id
+    woody_trees_list.push({ ...doc.data(), id: doc.id });
 
     count++
     // console.log(`${doc.id} => ${doc.data()}`);
@@ -77,12 +91,6 @@ console.log(woody_trees_list)
 
 
 
-woody_trees_btn.addEventListener("click", () => showContent('woody_trees'))
-herbaceous_plants_btn.addEventListener("click", () => showContent('herbaceous_plants'))
-fungi_btn.addEventListener("click", () => showContent('fungi'))
-
-
-
 
 
 
@@ -99,9 +107,9 @@ const input7 = document.getElementById("input7")
 
 form.addEventListener("submit", async (event) => {
     event.preventDefault()
-    
-    try {
-        const docRef = await addDoc(collection(db, "woody_trees"), {
+    if ([input1, input2, input3, input4, input5, input6, input7].every(input => input.value !== "")) {
+        try {
+          const docRef = await addDoc(collection(db, "woody_trees"), {
             'title': input1.value,
             'img': input2.value,
             'ten_khoa_hoc': input3.value,
@@ -109,11 +117,12 @@ form.addEventListener("submit", async (event) => {
             'dac_diem': input5.value,
             'phan_bo': input6.value,
             'ung_dung': input7.value
-        });
-    
-    } catch (error) {
-        console.error(error)
-    }
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
     input1.value = '';
     input2.value = '';
     input3.value = '';
@@ -124,17 +133,17 @@ form.addEventListener("submit", async (event) => {
 })
 
 
-for (const content_div of contents_div) {
-    content_div.addEventListener("click", () => {
-        // console.log(content_div.id);
-        for (const woody_tree of woody_trees_list) {
-            if (content_div.id == woody_tree.title) {
-                console.log(123);
+// for (const content_div of contents_div) {
+//     content_div.addEventListener("click", () => {
+//         // console.log(content_div.id);
+//         for (const woody_tree of woody_trees_list) {
+//             if (content_div.id == woody_tree.title) {
+//                 console.log(123);
                 
-            }
-        }
-    })
-}
+//             }
+//         }
+//     })
+// }
 
 
 
@@ -163,7 +172,7 @@ for (const content_div of contents_div) {
 const header_h1 = document.querySelector("header>h1");
 const p = document.querySelector("p");
 const nav_button = document.querySelectorAll("nav button");
-const content_div = document.querySelectorAll(".content div");
+const nav = document.querySelector('nav')
 const content_img = document.querySelectorAll(".content img");
 
 
@@ -207,7 +216,7 @@ function adjustcontent() {
     const screenWidth = window.innerWidth;
     
   if (screenWidth < 540) {
-    content_div.forEach((div) => {
+    content.forEach((div) => {
         div.style.fontSize = "0.75em";
     });
     content_img.forEach((img) => {
@@ -215,7 +224,7 @@ function adjustcontent() {
         img.style.height = "84.5pxpx"
     });
   } else if (screenWidth >= 540 && screenWidth < 685) {
-    content_div.forEach((div) => {
+    content.forEach((div) => {
         div.style.fontSize = "0.85em";
     });
     content_img.forEach((img) => {
@@ -223,7 +232,7 @@ function adjustcontent() {
         img.style.height = "104px"
     });
   } else {
-    content_div.forEach((div) => {
+    content.forEach((div) => {
         div.style.fontSize = "1.1em";
     });
     content_img.forEach((img) => {
@@ -244,19 +253,43 @@ window.addEventListener("resize", () => {
 
 
 
+showContent('home')
+home_btn.addEventListener("click", () => showContent('home'))
+trees_page.addEventListener("click", () => showContent('trees_page'))
+woody_trees_btn.addEventListener("click", () => change_page_content('woody_trees'))
+herbaceous_plants_btn.addEventListener("click", () => change_page_content('herbaceous_plants'))
+fungi_btn.addEventListener("click", () => change_page_content('fungi'))
 
 
 
 
-function showContent(section) {
-    page_status = section
-    if (section === 'woody_trees') {
+
+
+
+function showContent(page_status) {
+    if (page_status === 'home') {
+        home.style.display = 'block'
+        nav.style.display = 'none'
+        content_div.style.display = 'none'
+    } else if (page_status === 'trees_page') {
+        nav.style.display = 'flex'
+        home.style.display = 'none'
+        content_div.style.display = 'flex'
+        change_page_content('woody_trees')
+    }
+}
+
+
+
+
+function change_page_content(page_content) {
+    if (page_content === 'woody_trees') {
         on_page(woody_trees_btn)
         out_page(herbaceous_plants_btn)
         out_page(fungi_btn)
-        contentDiv.innerHTML = ``
+        content_div.innerHTML = ``
         for (const woody_tree of woody_trees_list) {
-            contentDiv.innerHTML += `
+            content_div.innerHTML += `
             <div class="content" id="${woody_tree.title}">
                 <img src="${woody_tree.img}" alt="">
                 <div>
@@ -266,46 +299,42 @@ function showContent(section) {
             </div>
             `;
         }
-        // contentDiv.innerHTML += `
-        // <div class="content" id="">
-        //     <img src="https://govi.vn/wp-content/uploads/2022/03/go-lim-xanh-la-gi-va-dac-diem-nhan-biet.jpg" alt="">
-        //     <div>
-        //         <h2>Lim Xanh (Erythrophleum fordii)</h2>
-        //         <p>Lim Xanh là loài cây gỗ lớn, cao khoảng 20-30m, đường kính thân có thể lên đến 1m hoặc hơn. Gỗ Lim
-        //             Xanh rất cứng, nặng, bền, không mối mọt và có màu đỏ sẫm.</p>
-        //     </div>
-        // </div>
-        // `;
-        
-    } else if (section === 'herbaceous_plants') {
+    } else if (page_content === 'herbaceous_plants') {
         out_page(woody_trees_btn)
         on_page(herbaceous_plants_btn)
         out_page(fungi_btn)
-        contentDiv.innerHTML = `
-        <div id="content">
-            <img src="https://govi.vn/wp-content/uploads/2022/03/go-lim-xanh-la-gi-va-dac-diem-nhan-biet.jpg" alt="">
-            <div class="content">
-                <h2>Lim Xanh (Erythrophleum fordii)</h2>
-                <p>Lim Xanh là loài cây gỗ lớn, cao khoảng 20-30m, đường kính thân có thể lên đến 1m hoặc hơn. Gỗ Lim
-                    Xanh rất cứng, nặng, bền, không mối mọt và có màu đỏ sẫm.</p>
+        content_div.innerHTML = ``
+        for (const woody_tree of woody_trees_list) {
+            content_div.innerHTML += `
+            <div class="content" id="${woody_tree.title}">
+                <img src="${woody_tree.img}" alt="">
+                <div>
+                    <h2>${woody_tree.title}</h2>
+                    <p>${woody_tree.dac_diem}</p>
+                </div>
             </div>
-        </div>
-        `;
-    } else if (section === 'fungi') {
+            `;
+        }
+    } else if (page_content === 'fungi') {
         out_page(woody_trees_btn)
         out_page(herbaceous_plants_btn)
         on_page(fungi_btn)
-        contentDiv.innerHTML = `
-            <h2>Bảo vệ thiên nhiên</h2>
-            <p>Các biện pháp bảo vệ thiên nhiên như giữ gìn sinh thái và giảm thiểu ô nhiễm.</p>
-            <ul>
-                <li>Trồng cây xanh: Cải thiện chất lượng không khí và tạo môi trường sống cho động vật.</li>
-                <li>Giảm thiểu rác thải nhựa: Hạn chế sử dụng sản phẩm nhựa dùng một lần.</li>
-                <li>Bảo vệ động vật hoang dã: Ngăn chặn săn bắn trái phép và bảo tồn loài quý hiếm.</li>
-            </ul>
-        `;
+        content_div.innerHTML = ``
+        for (const woody_tree of woody_trees_list) {
+            content_div.innerHTML += `
+            <div class="content" id="${woody_tree.title}">
+                <img src="${woody_tree.img}" alt="">
+                <div>
+                    <h2>${woody_tree.title}</h2>
+                    <p>${woody_tree.dac_diem}</p>
+                </div>
+            </div>
+            `;
+        }
     }
 }
+
+
 
 function on_page(e) {
     e.style.color = 'white';
