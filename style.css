@@ -7,7 +7,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #d5d5d569;
+    /* background-color: #d5d5d569; */
     color: #333;
     text-align: center;
     line-height: 1.6;
@@ -69,7 +69,7 @@ nav button {
     transition: background-color 0.3s ease;
     transition: all 0.5s;
     transition-timing-function:cubic-bezier(0.5, 3, 0, 1);
-    box-shadow:0 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow:0 0 15px rgba(0, 0, 0, 0.3);
 }
 
 nav button:hover {
@@ -77,7 +77,7 @@ nav button:hover {
     color: white;
     background-color: #2cc06a;
     border-color: #2cc06a;
-    box-shadow:0 0 15px rgba(0, 0, 0, 0.2);
+    box-shadow:0 0 15px rgba(0, 0, 0, 0.4);
 }
 main {
     display: flex;
@@ -95,7 +95,7 @@ main {
     display: flex;
     background-color: #ffffff;
     border-radius: 8px;
-    box-shadow:0 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow:0 0 15px rgba(0, 0, 0, 0.3);
     margin: 10px 30px;
     max-width: 800px;
     transition: all 0.4s;
@@ -144,9 +144,19 @@ main {
     border-radius: 10px;
     align-items: end;
     justify-content: center;
+    box-shadow:0 0 15px rgba(0, 0, 0, 0.5);
 }
 #trees_page {
     background-image: url("https://www.treehugger.com/thmb/aG-r6Gfm7seMVqjBoYxUVXMwUt4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/8860298334_509c5f9698_o-2fba9e1a26cc465bb9d4f9b659b2296d.jpg");
+}
+#method {
+    background-image: url("img/bao-ve-moi-truong.jpg");
+}
+#social_network {
+    background-image: url("img/social.jpg");
+}
+#community {
+    background-image: url("img/chien-dich-cong-dong.jpg");
 }
 .white_effect {
     transition: all 0.3s;
@@ -167,22 +177,30 @@ main {
     font-size: 1.1em;
 }
 .pages:hover {
-    transform: rotate(1deg) scale(1.2, 1.2);
+    transform: scale(1.12, 1.12);
 }
 
 
 .introduce {
-    width: 100%;
-    height: 600px;
+    margin: 100px;
+    width: calc(100%-100px);
+    height: 50rem;
     display: flex;
+    justify-content: center;
+}
+.introduce>div {
+    background-color: #EEEEEE;
+    display: flex;
+    align-items: center;
+    max-width: 80em;
+    height: fit-content;
 }
 .introduce img {
     margin: 20px;
-    width: 50%;
-    height: fit-content;
+    width: 60%;
     background-size: cover;
     object-fit: contain;
-    box-shadow:0 0 15px rgba(0, 0, 0, 0.4);
+    /* box-shadow:0 0 15px rgba(0, 0, 0, 0.4); */
 }
 
 

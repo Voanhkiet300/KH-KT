@@ -55,17 +55,25 @@ const auth = getAuth();
 
 
 
+const nav = document.querySelector('nav')
 const home = document.querySelector("#home")
 const home_btn = document.querySelector("#home_btn")
 const content_div = document.querySelector("#trees_page_div")
-const content = document.querySelectorAll(".content")
 const trees_page = document.querySelector("#trees_page")
 const woody_trees_btn = document.getElementById('woody_trees')
 const herbaceous_plants_btn = document.getElementById('herbaceous_plants')
 const fungi_btn = document.getElementById('fungi')
 let woody_trees_list = []
-let woody_trees = {}
+let herbaceous_plants_list = []
+let fungis_list = []
 let count = 0
+
+
+
+
+showContent('home')
+
+
 
 
 count = 0
@@ -74,21 +82,27 @@ woody_trees_querySnapshot.forEach((doc) => {
     woody_trees_list.push({ ...doc.data(), id: doc.id });
 
     count++
-    // console.log(`${doc.id} => ${doc.data()}`);
-    // contentDiv.innerHTML = `
-    // <div id="content">
-    //     <img src="https://govi.vn/wp-content/uploads/2022/03/go-lim-xanh-la-gi-va-dac-diem-nhan-biet.jpg" alt="">
-    //     <div class="content">
-    //         <h2>Lim Xanh (Erythrophleum fordii)</h2>
-    //         <p>Lim Xanh là loài cây gỗ lớn, cao khoảng 20-30m, đường kính thân có thể lên đến 1m hoặc hơn. Gỗ Lim
-    //             Xanh rất cứng, nặng, bền, không mối mọt và có màu đỏ sẫm.</p>
-    //     </div>
-    // </div>`
 });
 console.log(woody_trees_list)
 
 
+count = 0
+const herbaceous_plants_querySnapshot = await getDocs(collection(db, "herbaceous_plants"));
+herbaceous_plants_querySnapshot.forEach((doc) => {
+    herbaceous_plants_list.push({ ...doc.data(), id: doc.id });
 
+    count++
+});
+console.log(herbaceous_plants_list)
+
+
+count = 0
+const fungis_querySnapshot = await getDocs(collection(db, "fungi"));
+fungis_querySnapshot.forEach((doc) => {
+    fungis_list.push({ ...doc.data(), id: doc.id });
+    count++
+});
+console.log(fungis_list)
 
 
 
@@ -104,22 +118,57 @@ const input4 = document.getElementById("input4")
 const input5 = document.getElementById("input5")
 const input6 = document.getElementById("input6")
 const input7 = document.getElementById("input7")
+const input8 = document.getElementById("input8")
+input8.value = 'fungi';
 
 form.addEventListener("submit", async (event) => {
     event.preventDefault()
-    if ([input1, input2, input3, input4, input5, input6, input7].every(input => input.value !== "")) {
-        try {
-          const docRef = await addDoc(collection(db, "woody_trees"), {
-            'title': input1.value,
-            'img': input2.value,
-            'ten_khoa_hoc': input3.value,
-            'ho': input4.value,
-            'dac_diem': input5.value,
-            'phan_bo': input6.value,
-            'ung_dung': input7.value
-          });
-        } catch (error) {
-          console.error(error);
+    if ([input1, input2, input3, input4, input5, input6, input7, input8].every(input => input.value !== "")) {
+        if (input8.value == "woody_trees") {
+            
+            try {
+                const docRef = await addDoc(collection(db, "woody_trees"), {
+                    'title': input1.value,
+                    'img': input2.value,
+                    'ten_khoa_hoc': input3.value,
+                    'ho': input4.value,
+                    'dac_diem': input5.value,
+                    'phan_bo': input6.value,
+                    'ung_dung': input7.value
+                });
+            } catch (error) {
+            console.error(error);
+            }
+        } else if (input8.value == "herbaceous_plants") {
+            
+            try {
+                const docRef = await addDoc(collection(db, "herbaceous_plants"), {
+                    'title': input1.value,
+                    'img': input2.value,
+                    'ten_khoa_hoc': input3.value,
+                    'ho': input4.value,
+                    'dac_diem': input5.value,
+                    'phan_bo': input6.value,
+                    'ung_dung': input7.value
+                });
+            } catch (error) {
+            console.error(error);
+            }
+        } else if (input8.value == "fungi") {
+            
+            try {
+                const docRef = await addDoc(collection(db, "fungi"), {
+                    'title': input1.value,
+                    'img': input2.value,
+                    'ten_khoa_hoc': input3.value,
+                    'ho': input4.value,
+                    'dac_diem': input5.value,
+                    'phan_bo': input6.value,
+                    'ung_dung': input7.value
+                });
+            } catch (error) {
+            console.error(error);
+            }
         }
       }
 
@@ -130,6 +179,7 @@ form.addEventListener("submit", async (event) => {
     input5.value = '';
     input6.value = '';
     input7.value = '';
+    input8.value = 'fungi';
 })
 
 
@@ -168,92 +218,12 @@ form.addEventListener("submit", async (event) => {
 
 
 
-// responsive
-const header_h1 = document.querySelector("header>h1");
-const p = document.querySelector("p");
-const nav_button = document.querySelectorAll("nav button");
-const nav = document.querySelector('nav')
-const content_img = document.querySelectorAll(".content img");
-
-
-
-function adjust_nav_header() {
-  const screenWidth = window.innerWidth;
-  if (screenWidth < 768) {
-    header_h1.style.fontSize = "2.2em";
-    p.style.fontSize = "1em";
-    nav_button.forEach((button) => {
-        button.style.padding = "8px 10px"
-        button.style.margin = "5px 3px"
-    });
-    // content_div.forEach((div) => {
-    //     div.style.fontSize = "0.9em";
-    // });
-  } else if (screenWidth >= 768 && screenWidth < 1024) {
-    header_h1.style.fontSize = "2.5em";
-    p.style.fontSize = "1.2em";
-    nav_button.forEach((button) => {
-        button.style.padding = "10px 15px"
-        button.style.margin = "5px 5px"
-    });
-    // content_div.forEach((div) => {
-    //     div.style.fontSize = "1em";
-    // });
-  } else {
-    header_h1.style.fontSize = "3em";
-    p.style.fontSize = "1.5em";
-    nav_button.forEach((button) => {
-        button.style.padding = "10px 20px"
-        button.style.margin = "5px 10px"
-    });
-    // content_div.forEach((div) => {
-    //     div.style.fontSize = "1.2em";
-    // });
-  }
-}
-
-function adjustcontent() {
-    const screenWidth = window.innerWidth;
-    
-  if (screenWidth < 540) {
-    content.forEach((div) => {
-        div.style.fontSize = "0.75em";
-    });
-    content_img.forEach((img) => {
-        img.style.width = "130px"
-        img.style.height = "84.5pxpx"
-    });
-  } else if (screenWidth >= 540 && screenWidth < 685) {
-    content.forEach((div) => {
-        div.style.fontSize = "0.85em";
-    });
-    content_img.forEach((img) => {
-        img.style.width = "160px"
-        img.style.height = "104px"
-    });
-  } else {
-    content.forEach((div) => {
-        div.style.fontSize = "1.1em";
-    });
-    content_img.forEach((img) => {
-        img.style.width = "200px"
-        img.style.height = "130pxpx"
-    });
-  }
-}
-
-adjust_nav_header();
-adjustcontent();
-window.addEventListener("resize", () => {
-    adjust_nav_header()
-    adjustcontent()
-});
 
 
 
 
 
-showContent('home')
+
 home_btn.addEventListener("click", () => showContent('home'))
 trees_page.addEventListener("click", () => showContent('trees_page'))
 woody_trees_btn.addEventListener("click", () => change_page_content('woody_trees'))
@@ -304,13 +274,13 @@ function change_page_content(page_content) {
         on_page(herbaceous_plants_btn)
         out_page(fungi_btn)
         content_div.innerHTML = ``
-        for (const woody_tree of woody_trees_list) {
+        for (const herbaceous_plant of herbaceous_plants_list) {
             content_div.innerHTML += `
-            <div class="content" id="${woody_tree.title}">
-                <img src="${woody_tree.img}" alt="">
+            <div class="content" id="${herbaceous_plant.title}">
+                <img src="${herbaceous_plant.img}" alt="">
                 <div>
-                    <h2>${woody_tree.title}</h2>
-                    <p>${woody_tree.dac_diem}</p>
+                    <h2>${herbaceous_plant.title}</h2>
+                    <p>${herbaceous_plant.dac_diem}</p>
                 </div>
             </div>
             `;
@@ -320,13 +290,13 @@ function change_page_content(page_content) {
         out_page(herbaceous_plants_btn)
         on_page(fungi_btn)
         content_div.innerHTML = ``
-        for (const woody_tree of woody_trees_list) {
+        for (const fungi of fungis_list) {
             content_div.innerHTML += `
-            <div class="content" id="${woody_tree.title}">
-                <img src="${woody_tree.img}" alt="">
+            <div class="content" id="${fungi.title}">
+                <img src="${fungi.img}" alt="">
                 <div>
-                    <h2>${woody_tree.title}</h2>
-                    <p>${woody_tree.dac_diem}</p>
+                    <h2>${fungi.title}</h2>
+                    <p>${fungi.dac_diem}</p>
                 </div>
             </div>
             `;
