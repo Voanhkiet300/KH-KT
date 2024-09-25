@@ -345,8 +345,3 @@ function out_page(e) {
     e.style.color = '#27ae60';
     e.style.backgroundColor = 'white';
 }
-
-
-
-
-
